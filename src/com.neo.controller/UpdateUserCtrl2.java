@@ -1,6 +1,7 @@
 package com.neo.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 
 
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.neo.entity.User;
 import com.neo.service.userService;
@@ -50,6 +52,9 @@ public class UpdateUserCtrl2 extends HttpServlet {
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		//User user = new User();
+		
+		//request.setCharacterEncoding("utf-8");
 		String userName = (String) request.getSession().getAttribute("UserName");
 		
 		userService userService = new userService();
@@ -57,6 +62,10 @@ public class UpdateUserCtrl2 extends HttpServlet {
 		request.setAttribute("nickname", nickname);
 		User USER = userService.findByUserName(userName);
 		request.setAttribute("isAdmin", USER.getAdminUser());
+		
+		//String userName = (String)request.getSession().getAttribute("UserName");
+		//userService userService = new userService();
+		
 		userName = request.getParameter("userName");
 		System.out.println("userName:"+userName);
 		
@@ -76,19 +85,26 @@ public class UpdateUserCtrl2 extends HttpServlet {
 		user.setDescip(request.getParameter("descip"));
 		
 		java.util.Date currentDate = Calendar.getInstance().getTime();
-    Date sqlDate = new Date(currentDate.getTime());
+        // ×ª»»Îª java.sql.Date
+        Date sqlDate = new Date(currentDate.getTime());
 		user.setModiDate(sqlDate);
-
+		
+		//userService userService = new userService();
 		User retUser = userService.update(user);
 		
 		request.setAttribute("user", user);
 
 		if (retUser == null){
-			request.setAttribute("errorMessage", "ä¿®æ”¹ä¿¡æ¯å‡ºé”™ï¼");
+			request.setAttribute("errorMessage", "ĞŞ¸ÄĞÅÏ¢³ö´í£¡");
 			request.getRequestDispatcher("/modify3.jsp").forward(request, response);
 			return;
 		}
-
+		
+		//×ª·¢µ½ÊÓÍ¼ÏÔÊ¾³É¹¦ĞÅÏ¢
 		request.getRequestDispatcher("UserDetail3.jsp").forward(request, response);
+
+	
+		
 	}
+
 }
