@@ -21,37 +21,13 @@ import com.neo.service.userService;
 public class FindArtByTitleCtrl extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		/*
-		String userName = (String) request.getSession().getAttribute("UserName");
-		
-		userService userService = new userService();
-		String nickname = userService.findNickname(userName);
-		request.setAttribute("nickname", nickname);
-		
-		//request.setAttribute("UserName", userName);
-		
-		String artTitle = request.getParameter("ArtTitle");
-		//System.out.println("typeId"+typeId);
-		articleService artService = new articleService();
-		
-		Atricle art = new Atricle();
-		List<Atricle> list = artService.findByTitle(artTitle);
-		
-		
-		request.setAttribute("artList", list);
-		//request.setAttribute("Type",t);
-		request.getRequestDispatcher("/Blog_main.jsp").forward(request, response);*/
-		
-		doPost(request,response);
-		
+			throws ServletException, IOException {	
+		doPost(request,response);		
 	}
 
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//response.sendRedirect(request.getContextPath() + "/Blog_main.jsp");
-		
 		
 		String userName = (String) request.getSession().getAttribute("UserName");
 		
@@ -61,10 +37,9 @@ public class FindArtByTitleCtrl extends HttpServlet {
 		User USER = userService.findByUserName(userName);
 		if(userName != null){
 			request.setAttribute("isAdmin", USER.getAdminUser());}
-		//request.setAttribute("UserName", userName);
 		
 		String artTitle = request.getParameter("ArtTitle");
-		//System.out.println("typeId"+typeId);
+		
 		articleService artService = new articleService();
 		
 		Atricle art = new Atricle();
@@ -72,7 +47,7 @@ public class FindArtByTitleCtrl extends HttpServlet {
 		
 		
 		request.setAttribute("artList", list);
-		//request.setAttribute("Type",t);
+		
 		request.getRequestDispatcher("/Blog_main.jsp").forward(request, response);
 	}
 
